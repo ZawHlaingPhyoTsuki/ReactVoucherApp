@@ -21,7 +21,7 @@ export default [
     plugins: {
       react,
       'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+      'react-refresh': reactRefresh
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -33,6 +33,8 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      "react/jsx-uses-vars": "error",
+      "react/jsx-uses-react": "error",
     },
   },
 ]
