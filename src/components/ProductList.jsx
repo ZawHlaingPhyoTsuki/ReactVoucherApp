@@ -7,21 +7,28 @@ import {
 } from "react-icons/hi";
 import useSWR, { mutate } from "swr";
 import ProductListSkeleton from "./ProductListSkeleton";
+import ProductListEmpty from "./ProductListEmpty";
+import ProductListRow from "./ProductListRow";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-
 const ProductList = () => {
   // console.log(import.meta.env.VITE_API_URL);
+  
+  // const { data, isLoading, error } = useSWR(
+  //   "http://localhost:5000/products",
+  //   fetcher
+  // );
 
-  const { data, isValidating, isLoading, error } = useSWR(
-    import.meta.env.Vite_API_URL,
+  const { data, isLoading, error } = useSWR(
+    import.meta.env.VITE_API_URL + "/products",
     fetcher
   );
-  const handleRefresh = () => {
-    // Set the cached data to undefined to force isLoading to be true
-    mutate(import.meta.env.VITE_API_URL, undefined, false);
-  };
+
+  // const handleRefresh = () => {
+  //   // Set the cached data to undefined to force isLoading to be true
+  //   mutate(import.meta.env.VITE_API_URL, undefined, false);
+  // };
 
   // console.log(isLoading)
 
@@ -70,47 +77,12 @@ const ProductList = () => {
           <tbody>
             {isLoading ? (
               <ProductListSkeleton />
+            ) : data.length === 0 ? (
+              <ProductListEmpty />
             ) : (
-              <>
-                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 hidden last:table-row ">
-                  <td colSpan={5} className="px-6 py-4 text-center">
-                    There is no product
-                  </td>
-                </tr>
-                <tr className=" border-b dark:border-gray-700">
-                  <td className="px-6 py-4">1</td>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    Apple MacBook Pro 17"
-                  </th>
-
-                  <td className="px-6 py-4 text-end">$2999</td>
-                  <td className="px-6 py-4 text-end">
-                    <p className="text-xs">2022-01-01</p>
-                    <p className="text-xs">9: 45 PM</p>
-                  </td>
-
-                  <td
-                    className="px-1 py-4 file:inline-flex rounded-md shadow-sm"
-                    role="group"
-                  >
-                    <button
-                      type="button"
-                      className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
-                    >
-                      <HiOutlinePencil className="size-5" />
-                    </button>
-                    <button
-                      type="button"
-                      className="px-4 py-2 text-sm font-medium rounded-e-lg text-red-600 bg-white border-t border-b border-gray-200 rounded-s-lghover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-red-700 focus:text-red-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-red-500 dark:focus:text-white"
-                    >
-                      <HiOutlineTrash className="size-5" />
-                    </button>
-                  </td>
-                </tr>
-              </>
+              data.map((product) => (
+                <ProductListRow key={product.id} product={product} />
+              ))
             )}
           </tbody>
         </table>
