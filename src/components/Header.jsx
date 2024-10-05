@@ -1,11 +1,12 @@
 import React from "react";
 import Container from "./Container";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <header className="mb-5">
       <Container>
-        <h1 className="text-3xl font-bold ">Voucher App</h1>
+        <Link to={"/"} className="text-3xl font-bold ">Voucher App</Link>
         <p className="text-stone-500">TSUKUYOMI SOFTWARE</p>
       </Container>
     </header>

@@ -1,12 +1,16 @@
-import React from 'react'
+import React from "react";
+import Breadcrumb from "../components/Breadcrumb";
+import Container from "../components/Container";
 
 const SalePage = () => {
   return (
-    <div>
-      SalePage
-    </div>
-  )
-}
+    <section>
+      <Container>
+        <Breadcrumb currentPageTitle={"Sale"} />
+      </Container>
+    </section>
+  );
+};
 
-export default SalePage
-SalePage
+export default SalePage;
+SalePage;
